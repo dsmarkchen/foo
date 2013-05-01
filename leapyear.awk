@@ -19,26 +19,25 @@ function IsLeapYear(year)
 # tdd 
 function autotest()
 {
-    ref_2001 = 0;
+    common_year = 0;
+    leap_year = 1;
+
     s = IsLeapYear(2001);
-    print "2001 " ((s==ref_2001)? "OK":"FAIL");
+    print "2001 is a common year.." ((s==common_year)? "OK":"FAIL");
 
-    ref_1996 = 1;
     s = IsLeapYear(1996);
-    print "1996 " ((s==ref_1996)? "OK":"FAIL");
+    print "1996 is a leap year.." ((s==leap_year)? "OK":"FAIL");
 
-    ref_1900 = 0;
     s = IsLeapYear(1900);
-    print "1900 " ((s==ref_1900)? "OK":"FAIL");
+    print "1900 is a common year.." ((s==common_year)? "OK":"FAIL");
 
-    ref_2000 = 1;
     s = IsLeapYear(2000);
-    print "2000 " ((s==ref_2000)? "OK":"FAIL");
+    print "2000 is a leap year.." ((s==leap_year)? "OK":"FAIL");
 }
 
 BEGIN {
-    common_str = "Common";
-    leap_str = "Leap";
+    common_str = "common";
+    leap_str = "leap";
 
 }
 {
