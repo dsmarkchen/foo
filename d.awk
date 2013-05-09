@@ -51,7 +51,6 @@ function main() {
     year = gensub(/.* [0-9]+-[0-9]+-([0-9]+).*/, "20\\1", "g", b);
 
 
-
 # perfrom day add checking
     if (match($1, "PM")) {
 
@@ -64,7 +63,9 @@ function main() {
 
         if(hh == 12) hh = 0;
         if(day_change == 1) {
-            day += 1;
+            # add day by 1
+            # later mktime and strftime will automatically shift the month or year for me     
+            day += 1; 
             day_str+=1;
             day_change = 0;
         }
@@ -99,12 +100,17 @@ function autotest() {
     test_1();
     tdd_reset();
     test_2();
+    tdd_reset();
+    test_3();
+    tdd_reset();
+    test_4();
+    tdd_reset();
+    test_5();
 }
 function test_1() {
+    print "test_1 begins"
     $1 = "11:59:52 PM"
-    $2 = 0;
     $3 = 17;
-    $4 = 0;
     $5 = "13.3";
     ref_s0 = "23:59:52 17-Apr-2013\t17\t13.3"
     ss = main();
@@ -122,8 +128,10 @@ function test_1() {
     }
     else print ss " FAILED"
 
+    print "test_1 ends"
 }
 function test_2() {
+    print "test_2 begins"
     $1 = "12:00:01 AM"; 
     $2=307;	$3="19";	$4="-5,131.1";	$5="124.9";
     ref_s1 = "00:00:01 17-Apr-2013\t19\t124.9"
@@ -133,7 +141,90 @@ function test_2() {
     }
     else print ss " FAILED"
 
+    print "test_2 ends"
 }
+function test_3() {
+    print "test_3 begins"
+    mon_str = "Apr";
+    day_str = 30;
+    year_str = 13;
+    $1 = "11:59:52 PM"
+    $3 = 17;
+    $5 = "13.3";
+    ref_s0 = "23:59:52 30-Apr-2013\t17\t13.3"
+    ss = main();
+    if (ss ~ ref_s0) {
+        print ss " OK"
+    }
+    else print ss " FAILED"
+
+    $1 = "12:00:01 AM"; 
+    $2=307;	$3="19";	$4="-5,131.1";	$5="124.9";
+    ref_s1 = "00:00:01 01-May-2013\t19\t124.9"
+    ss = main();
+    if (ss ~ ref_s1) {
+        print ss " OK"
+    }
+    else print ss " FAILED"
+
+
+    print "test_3 ends"
+}
+function test_4() {
+    print "test_4 begins"
+    mon_str = "Feb";
+    day_str = 29;
+    year_str = 12;
+    $1 = "11:59:52 PM"
+    $3 = 17;
+    $5 = "13.3";
+    ref_s0 = "23:59:52 29-Feb-2012\t17\t13.3"
+    ss = main();
+    if (ss ~ ref_s0) {
+        print ss " OK"
+    }
+    else print ss " FAILED"
+
+    $1 = "12:00:01 AM"; 
+    $2=307;	$3="19";	$4="-5,131.1";	$5="124.9";
+    ref_s1 = "00:00:01 01-Mar-2012\t19\t124.9"
+    ss = main();
+    if (ss ~ ref_s1) {
+        print ss " OK"
+    }
+    else print ss " FAILED"
+
+    print "test_4 ends"
+}
+
+function test_5() {
+    print "test_5 begins"
+    mon_str = "Dec";
+    day_str = 31;
+    year_str = 12;
+    $1 = "11:59:52 PM"
+    $3 = 17;
+    $5 = "13.3";
+    ref_s0 = "23:59:52 31-Dec-2012\t17\t13.3"
+    ss = main();
+    if (ss ~ ref_s0) {
+        print ss " OK"
+    }
+    else print ss " FAILED"
+
+    $1 = "12:00:01 AM"; 
+    $2=307;	$3="19";	$4="-5,131.1";	$5="124.9";
+    ref_s1 = "00:00:01 01-Jan-2013\t19\t124.9"
+    ss = main();
+    if (ss ~ ref_s1) {
+        print ss " OK"
+    }
+    else print ss " FAILED"
+
+    print "test_5 ends"
+}
+
+
 BEGIN { # global variables
 
     FS="\t" 
