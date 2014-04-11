@@ -255,7 +255,7 @@ int build_prime_numbers(unsigned int nmax, int xprimes[], unsigned int xsize)
 {
     total = build_prime_numbers(n_in, primes, PRIME_MAX);
     if(verbose) {
-        printf("build_prime_numbers: input %d total %d\n", n_in, total);
+        printf("build_prime_numbers: input %d total %d\n", n_in, (int)total);
     }
 }
     
